@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+	<head>
+	<title>About</title>
+	</head>
+	
+	<body>
+		<h2> About 'Tango with Django' </h2>
+		<div>
+		<h6>This tutorial has been put together by Xavier</h6>
+		</div>
+		<br>
+		<div>
+			<a href="/rango/">Home</a><br />
+			<img src="{% static "images/magritte.jpg" %}"
+				alt="Picture of a pipe?"/> 
+		</div>
+		<div>
+			<img src="{{MEDIA_URL}}cat.jpg" alt = "Pink Panther"/>
+		</div>
+	</body>
+
+</html>
