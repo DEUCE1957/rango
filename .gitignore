@@ -1,0 +1,3 @@
+# ignore the dtaabase file
+db.sqlite3
+
