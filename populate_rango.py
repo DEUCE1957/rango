@@ -19,9 +19,12 @@ def populate():
 		{"title":"How to Think like a Computer Scientist",
 		"url":"http://www.greenteapress.com/thinkpython/"},
 		{"title":"Learn Python in 10 Minutes",
-		"url":"http://www.korokithakis.net/tutorials/python/"} ]
-	for elt in python_pages:
-		print str(elt) + " ; "
+		"url":"http://www.korokithakis.net/tutorials/python/"},
+		#Category.Python.views,
+		#Category.Python.likes,
+		]
+	#for elt in python_pages:
+	#	print str(elt) + " ; "
 
 	django_pages = [
 		{"title":"Official Django Tutorial",
@@ -29,22 +32,28 @@ def populate():
 		{"title":"Django Rocks",
 		"url":"http://www.djangorocks.com/"},
 		{"title":"How to Tango with Django",
-		"url":"http://www.tangowithdjango.com/"} ]
+		"url":"http://www.tangowithdjango.com/"},
+		#Category.Django.views,
+		#Category.Django.likes,
+		]
 
 		
 	other_pages = [
 		{"title":"Bottle",
 		"url":"http://bottlepy.org/docs/dev/"},
 		{"title":"Flask",
-		"url":"http://flask.pocoo.org"} ]
+		"url":"http://flask.pocoo.org"},
+		#Category.Other Frameworks.views,
+		#Category.Other Frameworks.likes,
+		]
 
 	
 
-	cats = {"Python": {"pages": python_pages},
-			"Django": {"pages": django_pages},
-			"Other Frameworks": {"pages": other_pages} }
+	cats = {"Python": {"pages": python_pages,"views":128,"likes":64,},
+			"Django": {"pages": django_pages,"views":64,"likes":32,},
+			"Other Frameworks": {"pages": other_pages,"views":32,"likes":16,} }
 
-	 # If you want to add more catergories or pages,
+	 # If you want to add more categories or pages,
 	 # add them to the dictionaries above.
 
 	 # The code below goes through the cats dictionary, then adds each category,
@@ -54,7 +63,7 @@ def populate():
 	 # for more information about how to iterate over a dictionary properly.
 
 	for cat, cat_data in cats.iteritems():
-		c = add_cat(cat)
+		c = add_cat(cat,views=cat_data["views"],likes=cat_data["likes"])
 		for p in cat_data["pages"]:
 			add_page(c, p["title"], p["url"])
 
@@ -63,15 +72,16 @@ def populate():
 		for p in Page.objects.filter(category=c):
 			print("- {0} - {1}".format(str(c), str(p)))
 
-def add_page(cat, title, url, views=0):
+def add_page(cat, title, url,views=0):
 	p = Page.objects.get_or_create(category=cat, title=title)[0]
 	p.url=url
-	p.views=views
 	p.save()
 	return p
 
-def add_cat(name):
-	c = Category.objects.get_or_create(name=name)[0]
+def add_cat(name,views,likes): #views,likes
+	c = Category.objects.get_or_create(name=name,views=views,likes=likes)[0-2]
+	#c.views = views
+	#c.likes = likes
 	c.save()
 	return c
 
