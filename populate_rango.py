@@ -15,36 +15,36 @@ def populate():
 
 	python_pages = [
 		{"title": "Official Python Tutorial",
-		"url":"http://docs.python.org/2/tutorial/"},
+		"url":"http://docs.python.org/2/tutorial/",
+		"views":42},
 		{"title":"How to Think like a Computer Scientist",
-		"url":"http://www.greenteapress.com/thinkpython/"},
+		"url":"http://www.greenteapress.com/thinkpython/",
+		"views":16},
 		{"title":"Learn Python in 10 Minutes",
-		"url":"http://www.korokithakis.net/tutorials/python/"},
-		#Category.Python.views,
-		#Category.Python.likes,
+		"url":"http://www.korokithakis.net/tutorials/python/",
+		"views":76},
 		]
-	#for elt in python_pages:
-	#	print str(elt) + " ; "
 
 	django_pages = [
 		{"title":"Official Django Tutorial",
-		"url":"https://docs.djangoproject.com/en/1.9/intro/tutorial01/"},
+		"url":"https://docs.djangoproject.com/en/1.9/intro/tutorial01/",
+		"views":120,},
 		{"title":"Django Rocks",
-		"url":"http://www.djangorocks.com/"},
+		"url":"http://www.djangorocks.com/",
+		"views":320},
 		{"title":"How to Tango with Django",
-		"url":"http://www.tangowithdjango.com/"},
-		#Category.Django.views,
-		#Category.Django.likes,
+		"url":"http://www.tangowithdjango.com/",
+		"views":22},
 		]
 
 		
 	other_pages = [
 		{"title":"Bottle",
-		"url":"http://bottlepy.org/docs/dev/"},
+		"url":"http://bottlepy.org/docs/dev/",
+		"views":100},
 		{"title":"Flask",
-		"url":"http://flask.pocoo.org"},
-		#Category.Other Frameworks.views,
-		#Category.Other Frameworks.likes,
+		"url":"http://flask.pocoo.org"
+		"views":60},
 		]
 
 	
@@ -65,7 +65,7 @@ def populate():
 	for cat, cat_data in cats.iteritems():
 		c = add_cat(cat,views=cat_data["views"],likes=cat_data["likes"])
 		for p in cat_data["pages"]:
-			add_page(c, p["title"], p["url"])
+			add_page(c, p["title"], p["url"],p["views"])
 
 	# Print out the categories we have added.
 	for c in Category.objects.all():
@@ -75,11 +75,12 @@ def populate():
 def add_page(cat, title, url,views=0):
 	p = Page.objects.get_or_create(category=cat, title=title)[0]
 	p.url=url
+	p.views=views
 	p.save()
 	return p
 
 def add_cat(name,views,likes): #views,likes
-	c = Category.objects.get_or_create(name=name,views=views,likes=likes)[0-2]
+	c = Category.objects.get_or_create(name=name,views=views,likes=likes)[0]
 	#c.views = views
 	#c.likes = likes
 	c.save()
