@@ -142,3 +142,7 @@ STATICFILES_DIRS = [STATIC_DIR, ]
 # Media Files (dynamic in nature)
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
+
+# Enable browser-length sessions 
+# I.e. cookies expire when browser is closed
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

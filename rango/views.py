@@ -8,6 +8,8 @@ from django.core.urlresolvers import reverse
 #Restrict access using the Django decorator
 from django.contrib.auth.decorators import login_required
 
+#Allows Rango to evaluate current date and time
+from datetime import datetime
 
 from django.shortcuts import render
 
@@ -18,9 +20,37 @@ from django.http import HttpResponse
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 
-def index(request):
-	request.session.set_test_cookie()
+#Asks the request for a cookie - Helper Function
+def get_server_side_cookie(request, cookie, default_val=None):
+	val = request.session.get(cookie)
+	if not val:
+		val = default_val
+	return val
+
+#Gets the number of visits to the site - Helper Function
+def visitor_cookie_handler(request):
+	# We use the COOKIES.get() function to obtain the visits cookie.
+	# If the cookie exists, the value returned is casted to an integer.
+	# If the cookie doesn't exist, then the default value of 1 is used.
+	visits = int(get_server_side_cookie(request,'visits','1'))
 	
+	last_visit_cookie = get_server_side_cookie(request,'last_visit', str(datetime.now()))
+	last_visit_time = datetime.strptime(last_visit_cookie[:-7],
+	'%Y-%m-%d %H:%M:%S')
+	
+	# If it's been more than a day since the last visit...
+	if (datetime.now() - last_visit_time).days > 0:
+		visits = visits + 1
+		# Update the last visit cookie now that we have updated the count
+		request.session['last_visit'] = str(datetime.now())
+	else:
+		# Set the last visit cookie
+		request.session['last_visit'] = last_visit_cookie
+		
+	# Update/set the visits cookie
+	request.session['visits'] = visits
+
+def index(request):
 	# Query the database for a list of ALL categories currently stored.
 	# Order the categories by no. likes in descending order.
 	# Retrieve the top 5 only - or all if less than 5.
@@ -29,8 +59,16 @@ def index(request):
 	category_list = Category.objects.order_by('-likes')[:5]
 	pages_list = Page.objects.order_by('-views')[:5]
 	context_dict = {'categories': category_list,'pages':pages_list}
+	
+	#call the helper function to handle the cookies
+	visitor_cookie_handler(request)
+	context_dict['visits']=request.session['visits']
+	
+	#Obtain our response object early so we can add cookie information
+	response = render(request,'rango/index.html',context_dict)
+
 	# Render the response and send it back!
-	return render(request, 'rango/index.html', context_dict)
+	return response
 	
 def show_category(request,category_name_slug):
 	#Create a context dictionary which we pass to the template
@@ -61,6 +99,12 @@ def show_category(request,category_name_slug):
 	return render(request, 'rango/category.html', context_dict)
 	
 def about(request):
+
+	#Sends message to console to check cookie functionality
+	if request.session.test_cookie_worked():
+		print("TEST COOKIE WORKED!")
+		request.session.delete_test_cookie()
+		
 	# prints out whether the method is a GET or a POST
 	print(request.method)
 	# prints out the user name, if no one is logged in it prints `AnonymousUser`
