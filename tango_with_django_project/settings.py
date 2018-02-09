@@ -104,15 +104,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Password Hashing - using the secure Bcrypt hasher
+# Password Hashing - using the secure PBKDDF2 hasher
 # https://pypi.python.org/pypi/bcrypt/
 
 PASSWORD_HASHERS = [
-	'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-	'django.contrib.auth.hashers.BCryptPasswordHasher',
 	'django.contrib.auth.hashers.PBKDF2PasswordHasher',
 	'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 ]
+
+# User authentication redirect
+# Sends user to the Login page if they attempt to access a restricted page
+
+LOGIN_URL = '/rango/login/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

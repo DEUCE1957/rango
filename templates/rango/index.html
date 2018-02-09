@@ -3,12 +3,24 @@
 {% load staticfiles %}
 
 {%block title_block %}
-	says hey there partner!
+{% if user.is_authenticated %}
+	Howdy {{ user.username }}!
+{% else %}
+	Hey there partner!
+{% endif %}
 {% endblock %}
 
 {% block body_block %}
 	<h1 align = center style="font-family:verdana"> Rango - Home Page </h1>
-
+	
+	<div> <p>
+	{% if user.is_authenticated %}
+		Howdy {{ user.username }}!
+	{% else %}
+		Hey there partner!	
+	{% endif %}
+	</div>	</p>
+	
 	<h2>Most Liked Categories</h2>
 	{% if categories %}
 	<ul>
