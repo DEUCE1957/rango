@@ -8,7 +8,7 @@
 
 {% block body_block %}
 		<h1> About  </h1>
-		<p> <strong> Visits: </strong> {{ visits }} </p>
+		
 		<div>
 			<img src="{% static "images/rango.jpg" %}"
 				alt="Picture of a pipe?" width = 721 height = 502 /> 
@@ -17,4 +17,5 @@
 		<div>
 			<img src="{{MEDIA_URL}}cat.jpg" alt = "Pink Panther" height = 300 width = 392 />
 		</div>
+		visits: {{ visits }}
 {% endblock %}

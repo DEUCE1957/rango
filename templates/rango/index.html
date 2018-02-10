@@ -21,7 +21,6 @@
 	{% endif %}
 	</div>	</p>
 	
-	<p> <strong> Number of visits</strong>: {{ visits }} </p>
 	
 	<h2>Most Liked Categories</h2>
 	{% if categories %}
@@ -51,4 +50,6 @@
 		<strong>There are no pages present.</strong>
 	{% endif %}
 		<img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" width = 721 height = 502 />
+	<br>
+	visits: {{ visits }}	
 {% endblock %}
