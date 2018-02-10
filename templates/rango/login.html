@@ -6,7 +6,7 @@ Login
 {% endblock %}
 
 {% block body_block %}
-<h1>Login to Rango</h1>
+<h1>Login</h1>
 <p>{{user_profile.username}}</p>
 <form id="login_form" method="post" action="{% url 'login' %}">
 	{% csrf_token %}

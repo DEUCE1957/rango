@@ -17,9 +17,11 @@
 	{% if user.is_authenticated %}
 		Howdy {{ user.username }}!
 	{% else %}
-		Hey there partner!	You are visitor number {{ visits }}
+		Hey there partner!
 	{% endif %}
 	</div>	</p>
+	
+	<p> <strong> Number of visits</strong>: {{ visits }} </p>
 	
 	<h2>Most Liked Categories</h2>
 	{% if categories %}
