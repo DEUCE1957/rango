@@ -145,4 +145,5 @@ MEDIA_URL = '/media/'
 
 # Enable browser-length sessions 
 # I.e. cookies expire when browser is closed
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 1209601 #default 2 weeks

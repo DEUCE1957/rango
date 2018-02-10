@@ -3,12 +3,12 @@
 {% load staticfiles %}
 
 {%block title_block %}
-	About 'Tango with Django' 
+	About 'Tango with Django'
 {% endblock %}
 
 {% block body_block %}
 		<h1> Rango - About 'Tango with Django'  </h1>
-
+		<p> <strong> Visits: </strong> {{ visits }} </p>
 		<div>
 			<img src="{% static "images/rango.jpg" %}"
 				alt="Picture of a pipe?" width = 721 height = 502 /> 

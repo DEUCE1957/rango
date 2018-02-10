@@ -99,17 +99,18 @@ def show_category(request,category_name_slug):
 	return render(request, 'rango/category.html', context_dict)
 	
 def about(request):
-
-	#Sends message to console to check cookie functionality
-	if request.session.test_cookie_worked():
-		print("TEST COOKIE WORKED!")
-		request.session.delete_test_cookie()
-		
+	
+	context_dict = {}
+	
+	#call the helper function to handle the cookies
+	visitor_cookie_handler(request)
+	context_dict['visits']=request.session['visits']
+	
 	# prints out whether the method is a GET or a POST
 	print(request.method)
 	# prints out the user name, if no one is logged in it prints `AnonymousUser`
 	print(request.user)
-	return render(request, 'rango/about.html',{})#context dictionary is empty {}
+	return render(request, 'rango/about.html',context_dict)#context dictionary is empty {}
 	
 @login_required
 def add_category(request):
